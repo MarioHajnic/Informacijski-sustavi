@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block title %}Filtriranje Podataka{% endblock %}
+
+{% block content %}
+    <h2 class="mb-4">Filtriranje Podataka o Zaposlenicima</h2>
+
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            Kriteriji filtriranja
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="has_children" class="form-label">S djecom / Bez djece:</label>
+                        <select class="form-select" id="has_children" name="has_children">
+                            <option value="">Svi</option>
+                            <option value="yes" {% if filter_params and filter_params.has_children == 'yes' %}selected{% endif %}>S djecom</option>
+                            <option value="no" {% if filter_params and filter_params.has_children == 'no' %}selected{% endif %}>Bez djece</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="bracni_status" class="form-label">Bračni status:</label>
+                        <select class="form-select" id="bracni_status" name="bracni_status">
+                            <option value="">Svi</option>
+                            <option value="udata/oženjen" {% if filter_params and filter_params.bracni_status == 'udata/oženjen' %}selected{% endif %}>Udata/Oženjen</option>
+                            <option value="razveden" {% if filter_params and filter_params.bracni_status == 'razveden' %}selected{% endif %}>Razveden</option>
+                            <option value="samac" {% if filter_params and filter_params.bracni_status == 'samac' %}selected{% endif %}>Samac</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="strucna_sprema" class="form-label">Stručna sprema:</label>
+                        <select class="form-select" id="strucna_sprema" name="strucna_sprema">
+                            <option value="">Svi</option>
+                            <option value="Srednja škola" {% if filter_params and filter_params.strucna_sprema == 'Srednja škola' %}selected{% endif %}>Srednja škola</option>
+                            <option value="VSS" {% if filter_params and filter_params.strucna_sprema == 'VSS' %}selected{% endif %}>VSS</option>
+                            <option value="Postdiplomski" {% if filter_params and filter_params.strucna_sprema == 'Postdiplomski' %}selected{% endif %}>Postdiplomski</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Filtriraj</button>
+            </form>
+        </div>
+    </div>
+
+    <h3 class="mt-5 mb-3">Rezultati Filtriranja:</h3>
+    <div class="list-group">
+        {% for zaposlenik in data %}
+            <li class="list-group-item mb-2 p-3 shadow-sm">
+                <h5><strong>{{ zaposlenik.ime }} {{ zaposlenik.prezime }}</strong></h5>
+                <small class="text-muted">
+                    Broj djece: {{ zaposlenik.djeca }} <br>
+                    Bračni status: {{ zaposlenik.bracni_status }} <br>
+                    {% if zaposlenik.radni_detalji %}
+                        Stručna sprema: {{ zaposlenik.radni_detalji.strucna_sprema }} <br>
+                        Plaća: {{ "%.2f"|format(zaposlenik.radni_detalji.placa) }}
+                    {% endif %}
+                </small>
+            </li>
+        {% else %}
+            <li class="list-group-item text-center text-muted py-4">Nema rezultata za odabrane kriterije.</li>
+        {% endfor %}
+    </div>
+{% endblock %}

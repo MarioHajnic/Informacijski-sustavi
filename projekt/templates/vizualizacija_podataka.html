@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block title %}Vizualizacija Podataka{% endblock %}
+
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+    <h2 class="mb-4 text-center">Vizualizacija: Prosječna Plaća prema Broju Djece</h2>
+    <div class="card p-3 shadow-sm">
+        <div style="width: 100%; max-width: 800px; margin: auto;">
+            <canvas id="salaryByChildrenChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        var brojDjece = {{ broj_djece|tojson }};
+        var prosjecnePlace = {{ prosjecne_place|tojson }};
+
+        var ctx = document.getElementById('salaryByChildrenChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar', // You can change this to 'line', 'pie, etc.
+            data: {
+                labels: brojDjece.map(String), // Ensure labels are strings
+                datasets: [{
+                    label: 'Prosječna Plaća',
+                    data: prosjecnePlace,
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)', /* Slightly more opaque */
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            color: '#333'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += new Intl.NumberFormat('hr-HR', { style: 'currency', currency: 'EUR' }).format(context.parsed.y);
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Prosječna Plaća (EUR)', /* Added currency */
+                            color: '#333',
+                            font: {
+                                size: 14
+                            }
+                        },
+                        ticks: {
+                            callback: function(value, index, values) {
+                                return new Intl.NumberFormat('hr-HR', { style: 'currency', currency: 'EUR' }).format(value);
+                            },
+                            color: '#555'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Broj Djece',
+                            color: '#333',
+                            font: {
+                                size: 14
+                            }
+                        },
+                        ticks: {
+                            color: '#555'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="text-center py-5">
+        <h1 class="display-4 fw-bold mb-3">Dobrodošli u TeamTrack</h1>
+        <p class="lead text-muted">Vaša aplikacija za efikasno vođenje evidencije o zaposlenicima.</p>
+        <hr class="my-4">
+        <p>Koristite navigaciju iznad za upravljanje podacima o zaposlenicima.</p>
+        <a class="btn btn-primary btn-lg mt-3" href="{{url_for('dodaj_zaposlenika_route')}}" role="button">Započnite s unosom</a>
+    </div>
+{% endblock %}

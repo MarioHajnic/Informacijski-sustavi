@@ -1,0 +1,123 @@
+{% extends "layout.html" %}
+
+{% block title %}Uredi Zaposlenika{% endblock %}
+
+{% block content %}
+    <h2 class="mb-4">Uredi zaposlenika: {{ zaposlenik.ime }} {{ zaposlenik.prezime }}</h2>
+    {% if message %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+    <form method="post">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                Osnovni podaci
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="ime" class="form-label">Ime:</label>
+                        <input type="text" class="form-control" id="ime" name="ime" value="{{ zaposlenik.ime }}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="prezime" class="form-label">Prezime:</label>
+                        <input type="text" class="form-control" id="prezime" name="prezime" value="{{ zaposlenik.prezime }}" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="datum_rodjenja" class="form-label">Datum Rođenja:</label>
+                        <input type="date" class="form-control" id="datum_rodjenja" name="datum_rodjenja" value="{{ zaposlenik.datum_rodjenja if zaposlenik.datum_rodjenja else '' }}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="godine" class="form-label">Godine:</label>
+                        <input type="number" class="form-control" id="godine" name="godine" value="{{ zaposlenik.godine }}" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="djeca" class="form-label">Broj djece:</label>
+                        <input type="number" class="form-control" id="djeca" name="djeca" value="{{ zaposlenik.djeca }}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="bracni_status" class="form-label">Bračni Status:</label>
+                        <select class="form-select" id="bracni_status" name="bracni_status" required>
+                            <option value="udata/oženjen" {% if zaposlenik.bracni_status == "udata/oženjen" %}selected{% endif %}>Udata/Oženjen</option>
+                            <option value="razveden" {% if zaposlenik.bracni_status == "razveden" %}selected{% endif %}>Razveden</option>
+                            <option value="samac" {% if zaposlenik.bracni_status == "samac" %}selected{% endif %}>Samac</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="adresa_stanovanja" class="form-label">Adresa Stanovanja:</label>
+                    <input type="text" class="form-control" id="adresa_stanovanja" name="adresa_stanovanja" value="{{ zaposlenik.adresa_stanovanja }}" required>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="telefon" class="form-label">Telefon:</label>
+                        <input type="text" class="form-control" id="telefon" name="telefon" value="{{ zaposlenik.telefon }}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ zaposlenik.email }}" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                Radni detalji
+            </div>
+            <div class="card-body">
+                {% if zaposlenik.radni_detalji %}
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="godine_radnog_staza" class="form-label">Godine radnog staža:</label>
+                        <input type="number" class="form-control" id="godine_radnog_staza" name="godine_radnog_staza" value="{{ zaposlenik.radni_detalji.godine_radnog_staza }}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="strucna_sprema" class="form-label">Stručna sprema:</label>
+                        <select class="form-select" id="strucna_sprema" name="strucna_sprema" required>
+                            <option value="Srednja škola" {% if zaposlenik.radni_detalji.strucna_sprema == "Srednja škola" %}selected{% endif %}>Srednja škola</option>
+                            <option value="VSS" {% if zaposlenik.radni_detalji.strucna_sprema == "VSS" %}selected{% endif %}>VSS</option>
+                            <option value="Postdiplomski" {% if zaposlenik.radni_detalji.strucna_sprema == "Postdiplomski" %}selected{% endif %}>Postdiplomski</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="placa" class="form-label">Plaća:</label>
+                        <input type="number" step="0.01" class="form-control" id="placa" name="placa" value="{{ "%.2f"|format(zaposlenik.radni_detalji.placa) }}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="broj_dana_godisnjeg" class="form-label">Broj dana godišnjeg:</label>
+                        <input type="number" class="form-control" id="broj_dana_godisnjeg" name="broj_dana_godisnjeg" value="{{ zaposlenik.radni_detalji.broj_dana_godisnjeg }}" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="jezik" class="form-label">Jezik:</label>
+                        <input type="text" class="form-control" id="jezik" name="jezik" value="{{ zaposlenik.radni_detalji.jezik }}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="datum_zaposlenja" class="form-label">Datum zaposlenja:</label>
+                        <input type="date" class="form-control" id="datum_zaposlenja" name="datum_zaposlenja" value="{{ zaposlenik.radni_detalji.datum_zaposlenja if zaposlenik.radni_detalji.datum_zaposlenja else '' }}" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="datum_otkaza" class="form-label">Datum otkaza (opcionalno):</label>
+                    <input type="date" class="form-control" id="datum_otkaza" name="datum_otkaza" value="{{ zaposlenik.radni_detalji.datum_otkaza if zaposlenik.radni_detalji.datum_otkaza else '' }}">
+                </div>
+                {% else %}
+                    <div class="alert alert-warning" role="alert">
+                        Nema radnih detalja za ovog zaposlenika. Molimo dodajte ih putem forme za unos zaposlenika.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">Ažuriraj Zaposlenika</button>
+    </form>
+{% endblock %}

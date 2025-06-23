@@ -1,0 +1,119 @@
+{% extends "layout.html" %}
+
+{% block title %}Dodaj Zaposlenika{% endblock %}
+
+{% block content %}
+    <h2 class="mb-4">Dodaj novog zaposlenika</h2>
+    {% if message %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+    <form method="post">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                Osnovni podaci
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="ime" class="form-label">Ime:</label>
+                        <input type="text" class="form-control" id="ime" name="ime" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="prezime" class="form-label">Prezime:</label>
+                        <input type="text" class="form-control" id="prezime" name="prezime" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="datum_rodjenja" class="form-label">Datum Rođenja:</label>
+                        <input type="date" class="form-control" id="datum_rodjenja" name="datum_rodjenja" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="godine" class="form-label">Godine:</label>
+                        <input type="number" class="form-control" id="godine" name="godine" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="djeca" class="form-label">Broj djece:</label>
+                        <input type="number" class="form-control" id="djeca" name="djeca" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="bracni_status" class="form-label">Bračni Status:</label>
+                        <select class="form-select" id="bracni_status" name="bracni_status" required>
+                            <option value="">Odaberi...</option>
+                            <option value="udata/oženjen">Udata/Oženjen</option>
+                            <option value="razveden">Razveden</option>
+                            <option value="samac">Samac</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="adresa_stanovanja" class="form-label">Adresa Stanovanja:</label>
+                    <input type="text" class="form-control" id="adresa_stanovanja" name="adresa_stanovanja" required>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="telefon" class="form-label">Telefon:</label>
+                        <input type="text" class="form-control" id="telefon" name="telefon" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                Radni detalji
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="godine_radnog_staza" class="form-label">Godine radnog staža:</label>
+                        <input type="number" class="form-control" id="godine_radnog_staza" name="godine_radnog_staza" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="strucna_sprema" class="form-label">Stručna sprema:</label>
+                        <select class="form-select" id="strucna_sprema" name="strucna_sprema" required>
+                            <option value="">Odaberi...</option>
+                            <option value="Srednja škola">Srednja škola</option>
+                            <option value="VSS">VSS</option>
+                            <option value="Postdiplomski">Postdiplomski</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="placa" class="form-label">Plaća:</label>
+                        <input type="number" step="0.01" class="form-control" id="placa" name="placa" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="broj_dana_godisnjeg" class="form-label">Broj dana godišnjeg:</label>
+                        <input type="number" class="form-control" id="broj_dana_godisnjeg" name="broj_dana_godisnjeg" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="jezik" class="form-label">Jezik:</label>
+                        <input type="text" class="form-control" id="jezik" name="jezik" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="datum_zaposlenja" class="form-label">Datum zaposlenja:</label>
+                        <input type="date" class="form-control" id="datum_zaposlenja" name="datum_zaposlenja" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="datum_otkaza" class="form-label">Datum otkaza (opcionalno):</label>
+                    <input type="date" class="form-control" id="datum_otkaza" name="datum_otkaza">
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">Dodaj Zaposlenika</button>
+    </form>
+{% endblock %}
