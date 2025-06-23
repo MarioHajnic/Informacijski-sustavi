@@ -1,4 +1,4 @@
-# STeamTrack
+# TeamTrack
 
 ## **TeamTrack: Sustav za Upravljanje Zaposlenicima**
 
